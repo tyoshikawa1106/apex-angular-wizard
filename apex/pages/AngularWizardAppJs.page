@@ -1,0 +1,21 @@
+<apex:page >
+    <script type="text/javascript">
+        angular.module("myApp", ["Controllers", "ngRoute"]).config(["$routeProvider", function($routeProvider){
+            $routeProvider.when("/", {
+                controller : "InputFormController",
+                templateUrl : "/apex/AngularWizardInputForm"
+            }).
+            when("/confirmation", {
+                controller : "ConfirmationController",
+                templateUrl : "/apex/AngularWizardConfirmation"
+            }).
+            when("/thanks", {
+                controller : "ThanksController",
+                templateUrl : "/apex/AngularWizardThanks"
+            }).
+            otherwise({
+                redirectTo: "/"
+            });
+        }]);
+    </script>
+</apex:page>

@@ -1,0 +1,14 @@
+<apex:page controller="AngularWizardController" docType="html-5.0" showHeader="true" sidebar="false" tabStyle="Account" id="page">
+    <head>
+        <apex:includeScript value="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.9/angular.min.js" />
+        <apex:includeScript value="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.9/angular-route.js" />
+    </head>
+    <body>
+        <div ng-app="myApp">
+            <div ng-view="true"></div>
+        </div>
+        <!-- AngularJS -->
+        <apex:include pageName="AngularWizardAppJs" />
+        <apex:include pageName="AngularWizardControllerJs" />
+    </body>
+</apex:page>

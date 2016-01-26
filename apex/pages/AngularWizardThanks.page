@@ -1,0 +1,14 @@
+<apex:page showHeader="false" standardStylesheets="false">
+    <div id="thanks-form">
+        <apex:pageBlock id="block" mode="edit">
+            <apex:pageMessages id="msg" />
+            <apex:pageBlockButtons location="bottom" id="buttons">
+                <button ng-click="doHome($event)"> 入力画面へ </button>
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection columns="1">
+                <apex:outputText value="正常に登録できました。" />
+            </apex:pageBlockSection>
+            <span ng-bind="errorMessages" style="color: red;padding-left: 10px;" />
+        </apex:pageBlock>
+    </div>
+</apex:page>

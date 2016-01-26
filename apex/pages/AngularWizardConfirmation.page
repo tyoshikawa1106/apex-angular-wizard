@@ -1,0 +1,27 @@
+<apex:page showHeader="false" standardStylesheets="false">
+    <div id="confirmation-form">
+        <apex:pageBlock mode="edit">
+            <apex:pageBlockButtons location="bottom">
+                <button ng-click="doBack($event)"> 戻る </button>
+                <button ng-click="doSave($event)"> 登録 </button>
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection columns="2" title="取引先情報の入力確認">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Account.Fields.Name.Label}" />
+                    <span ng-bind="Account.Name" />
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Account.Fields.AccountNumber.Label}" />
+                    <span ng-bind="Account.AccountNumber" />
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection columns="1" collapsible="false" title="添付ファイル">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="ファイル" />
+                    <span ng-bind="Attachment.FileName" />
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+            <span ng-bind="errorMessages" style="color: red;padding-left: 10px;" />
+        </apex:pageBlock>
+    </div>
+</apex:page>

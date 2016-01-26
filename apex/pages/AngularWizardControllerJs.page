@@ -1,0 +1,118 @@
+<apex:page >
+    <script type="text/javascript">    
+        var app = angular.module("Controllers", []);
+        
+        // 共通変数:Account
+        app.factory('Wrapper', function() {
+            return {
+                Account : {
+                    Name : 'salesforce.com',
+                    AccountNumber : 'SF-001'
+                },
+                Attachment : {
+                    FileName : '',
+                    FileSize : '',
+                    UploadFile : ''
+                }
+            };
+        });
+    
+        // InputFormController
+        app.controller("InputFormController", ["$scope", 'Wrapper', function($scope, Wrapper){
+            $scope.Account = Wrapper.Account;
+            $scope.Attachment = Wrapper.Attachment;
+            $scope.errorMessages = [];
+            
+            $scope.doNext = function(event) {
+                event.preventDefault();
+                
+                if (!$scope.Account.Name) {
+                    $scope.errorMessages = '取引先名が未入力です。';
+                    return false;
+                }
+                
+                var uploadFile = document.getElementById('attamentFile');
+                var file = uploadFile.files[0];
+                if (!file) {
+                    $scope.errorMessages = 'ファイルを選択してください。';
+                    return false;
+                }
+                if (!file.type.match(/(image.*)/)) {
+                    $scope.errorMessages = 'Imageファイルを選択してください。';
+                    return false;
+                }
+                if (file.size > 1242880) {
+                    $scope.errorMessages = 'ファイルサイズが上限を超えました。';
+                    return false;
+                }
+                
+                var reader = new FileReader();
+                reader.onloadend = function() {
+                    // DataURL
+                    var dataURL = reader.result;
+                    // Attachment情報
+                    $scope.Attachment.FileName = file.name;
+                    $scope.Attachment.FileSize = file.size;
+                    $scope.Attachment.UploadFile = dataURL.match(/,(.*)$/)[1];
+                    // 保存処理を実行
+                    location.href="#/confirmation";
+                };
+                reader.readAsDataURL(file);
+            };
+        }]);
+    
+        // ConfirmationController
+        app.controller("ConfirmationController", ["$scope", 'Wrapper', function($scope, Wrapper){
+            $scope.Account = Wrapper.Account;
+            $scope.Attachment = Wrapper.Attachment;
+            $scope.errorMessages = [];
+            // 戻るボタン
+            $scope.doBack = function(event) {
+                event.preventDefault();
+                location.href="#/";
+            };
+            
+            // 保存ボタン
+            $scope.doSave = function(event) {
+                event.preventDefault();
+                var wrapperObj = {
+                    account : $scope.Account,
+                    fileName : $scope.Attachment.FileName,
+                    uploadFile : $scope.Attachment.UploadFile,
+                    fileSize : $scope.Attachment.FileSize
+                };
+                doSaveByApex(wrapperObj);
+            };
+            
+            // 保存ボタンの処理
+            function doSaveByApex(wrapperObj) {
+                $scope.errorMessages = [];
+                // RemoteAction
+                AngularWizardController.doSaveAccount(wrapperObj, function(result, event){
+                        if(event.status) {
+                            if (result.errorMessages.length > 0) {
+                                // エラーメッセージを表示
+                                $scope.errorMessages = result.errorMessages;
+                            } else {
+                                alert('create! = ' + result.accountId);
+                                location.href="#/thanks";
+                            }
+                        } else {
+                            alert(event.message);
+                        }
+                        $scope.$apply();
+                        return false;
+                    });
+                }
+        }]);
+    
+        // ThanksController
+        app.controller("ThanksController", ["$scope", function($scope) {
+            $scope.errorMessages = [];
+            $scope.doHome = function(event) {
+                event.preventDefault();
+                location.href="#/";
+            };
+        }]);
+    </script>
+</apex:page>
