@@ -26,6 +26,7 @@
             $scope.doNext = function(event) {
                 event.preventDefault();
                 
+                // 取引先名必須エラー
                 if (!$scope.Account.Name) {
                     $scope.errorMessages = '取引先名が未入力です。';
                     return false;

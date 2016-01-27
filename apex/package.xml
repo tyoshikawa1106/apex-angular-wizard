@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members> AngularWizardWrapperTest</members>
         <members>AngularWizardController</members>
         <members>AngularWizardControllerTest</members>
         <members>AngularWizardHelper</members>
@@ -9,6 +8,8 @@
         <members>AngularWizardResult</members>
         <members>AngularWizardResultTest</members>
         <members>AngularWizardWrapper</members>
+        <members>AngularWizardWrapperTest</members>
+        <members>AngularWizardWrapperTest</members>
         <name>ApexClass</name>
     </types>
     <types>

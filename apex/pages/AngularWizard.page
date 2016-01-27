@@ -2,9 +2,11 @@
     <head>
         <apex:includeScript value="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.9/angular.min.js" />
         <apex:includeScript value="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.9/angular-route.js" />
+        <apex:includeScript value="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.9/angular-messages.js" />
+        <apex:include pageName="AngularWizardCss" />
     </head>
     <body>
-        <div ng-app="myApp">
+        <div id="vf-page" ng-app="myApp">
             <div ng-view="true"></div>
         </div>
         <!-- AngularJS -->

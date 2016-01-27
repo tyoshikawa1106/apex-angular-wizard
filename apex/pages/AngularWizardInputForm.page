@@ -1,26 +1,37 @@
 <apex:page showHeader="false" standardStylesheets="false">
     <div id="input-form">
-        <apex:pageBlock mode="edit">
-            <apex:pageBlockButtons location="bottom">
-                <button ng-click="doNext($event)"> 次へ </button>
-            </apex:pageBlockButtons>
-            <apex:pageBlockSection columns="2" title="取引先情報の入力">
-                <apex:pageBlockSectionItem >
-                    <apex:outputLabel value="{!$ObjectType.Account.Fields.Name.Label}" />
-                    <input type="text" ng-model="Account.Name" />
-                </apex:pageBlockSectionItem>
-                <apex:pageBlockSectionItem >
-                    <apex:outputLabel value="{!$ObjectType.Account.Fields.AccountNumber.Label}" />
-                    <input type="text" ng-model="Account.AccountNumber" />
-                </apex:pageBlockSectionItem>
-            </apex:pageBlockSection>
-            <apex:pageBlockSection columns="1" collapsible="false" title="添付ファイル">
-                <apex:pageBlockSectionItem >
-                    <apex:outputLabel value="ファイル" />
-                    <input type="file" name="attamentFile" id="attamentFile" />
-                </apex:pageBlockSectionItem>
-            </apex:pageBlockSection>
-            <span ng-bind="errorMessages" style="color: red;padding-left: 10px;" />
-        </apex:pageBlock>
+        <form name="inputForm" novalidate="true">
+            <apex:pageBlock mode="edit">
+                <apex:pageBlockButtons location="bottom">
+                    <button ng-click="doNext($event)"> 次へ </button>
+                </apex:pageBlockButtons>
+                <apex:pageBlockSection columns="2" title="取引先情報の入力">
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="{!$ObjectType.Account.Fields.Name.Label}" />
+                        <apex:outputPanel >
+                            <input type="text" name="accName" ng-model="Account.Name" ng-maxlength="80" required="true" /><br/>
+                            <div ng-messages="inputForm.accName.$error" ng-if="inputForm.accName.$touched">
+                                <div ng-message="required" class="errorMsg">取引先名を入力してください</div>
+                                <div ng-message="maxlength" class="errorMsg">文字数が上限を超えました</div>
+                            </div>
+                        </apex:outputPanel>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="{!$ObjectType.Account.Fields.AccountNumber.Label}" />
+                        <input type="text" name="accNumber" ng-model="Account.AccountNumber" ng-maxlength="40" /><br/>
+                        <div ng-messages="inputForm.accNumber.$error" ng-if="inputForm.accNumber.$touched">
+                            <div ng-message="maxlength" class="errorMsg">文字数が上限を超えました</div>
+                        </div>
+                    </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
+                <apex:pageBlockSection columns="1" collapsible="false" title="添付ファイル">
+                    <apex:pageBlockSectionItem >
+                        <apex:outputLabel value="ファイル" />
+                        <input type="file" name="attamentFile" id="attamentFile" />
+                    </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
+                <span ng-bind="errorMessages" style="color: red;padding-left: 10px;" />
+            </apex:pageBlock>
+        </form>
     </div>
 </apex:page>
